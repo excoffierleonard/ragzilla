@@ -18,12 +18,12 @@ struct Part {
 
 #[derive(Debug, Deserialize)]
 struct EmbeddingResponse {
-    pub embedding: Embedding,
+    embedding: Embedding,
 }
 
 #[derive(Debug, Deserialize)]
 struct Embedding {
-    pub values: Vec<f32>,
+    values: Vec<f32>,
 }
 
 pub async fn create_embedding(text: &str, api_key: &str) -> Result<Vec<f32>, reqwest::Error> {
@@ -60,7 +60,7 @@ mod tests {
     use dotenvy::dotenv;
 
     #[tokio::test]
-    async fn test_embedding() {
+    async fn test_embedding_creation() {
         dotenv().ok();
         let api_key = std::env::var("GEMINI_API_KEY").expect("GEMINI_API_KEY must be set");
 
