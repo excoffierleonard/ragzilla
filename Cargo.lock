@@ -3,5 +3,5 @@
 version = 4
 
 [[package]]
-name = "ragzilla"
+name = "ragzilla-embedding"
 version = "0.1.0"
