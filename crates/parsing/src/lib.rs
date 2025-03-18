@@ -1,7 +1,5 @@
-use rayon::prelude::*;
 use reqwest::{Client, Error};
 use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
 
 #[derive(Debug, Serialize)]
 struct ParsingRequest {
@@ -23,11 +21,10 @@ struct ParsingResponse {
 
 #[derive(Debug, Deserialize)]
 struct Page {
-    index: i32,
     markdown: String,
 }
 
-pub async fn parse_pdf(document_url: &str, api_key: &str) -> Result<HashMap<i32, String>, Error> {
+pub async fn parse_pdf(document_url: &str, api_key: &str) -> Result<Vec<String>, Error> {
     let url = "https://api.mistral.ai/v1/ocr";
 
     let request = ParsingRequest {
@@ -49,11 +46,10 @@ pub async fn parse_pdf(document_url: &str, api_key: &str) -> Result<HashMap<i32,
         .json::<ParsingResponse>()
         .await?;
 
-    // Return a hashmap of page index to markdown content
     Ok(response
         .pages
-        .into_par_iter()
-        .map(|page| (page.index, page.markdown))
+        .into_iter()
+        .map(|page| page.markdown)
         .collect())
 }
 
@@ -69,6 +65,6 @@ mod tests {
         let document_url = "https://arxiv.org/pdf/2201.04234";
 
         let chunks = parse_pdf(document_url, &api_key).await.unwrap();
-        println!("{}", chunks.len());
+        assert_eq!(chunks.len(), 29);
     }
 }
