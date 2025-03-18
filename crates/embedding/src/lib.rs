@@ -1,3 +1,4 @@
+use reqwest::{Client, Error};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize)]
@@ -26,7 +27,7 @@ struct Embedding {
     values: Vec<f32>,
 }
 
-pub async fn create_embedding(text: &str, api_key: &str) -> Result<Vec<f32>, reqwest::Error> {
+pub async fn create_embedding(text: &str, api_key: &str) -> Result<Vec<f32>, Error> {
     let url = format!(
         "https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-exp-03-07:embedContent?key={}",
         api_key
@@ -41,10 +42,9 @@ pub async fn create_embedding(text: &str, api_key: &str) -> Result<Vec<f32>, req
         },
     };
 
-    let client = reqwest::Client::new();
+    let client = Client::new();
     let response = client
         .post(&url)
-        .header("Content-Type", "application/json")
         .json(&request)
         .send()
         .await?
@@ -63,12 +63,9 @@ mod tests {
     async fn test_embedding_creation() {
         dotenv().ok();
         let api_key = std::env::var("GEMINI_API_KEY").expect("GEMINI_API_KEY must be set");
+        let text = "What is the meaning of life?";
 
-        let result = create_embedding("What is the meaning of life?", &api_key).await;
-        assert!(result.is_ok());
-
-        let embedding = result.unwrap();
-        assert!(!embedding.is_empty());
+        let embedding = create_embedding(&text, &api_key).await.unwrap();
         assert_eq!(embedding.len(), 3072);
     }
 }
