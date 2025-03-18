@@ -69,5 +69,6 @@ mod tests {
 
         let embedding = result.unwrap();
         assert!(!embedding.is_empty());
+        assert_eq!(embedding.len(), 3072);
     }
 }
