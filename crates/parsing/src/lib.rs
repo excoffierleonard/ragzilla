@@ -1,7 +1,7 @@
-use std::collections::HashMap;
-
+use rayon::prelude::*;
 use reqwest::{Client, Error};
 use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 
 #[derive(Debug, Serialize)]
 struct ParsingRequest {
@@ -23,7 +23,7 @@ struct ParsingResponse {
 
 #[derive(Debug, Deserialize)]
 struct Page {
-    index: String,
+    index: i32,
     markdown: String,
 }
 
@@ -31,7 +31,7 @@ pub async fn parse_pdf(document_url: &str, api_key: &str) -> Result<HashMap<i32,
     let url = "https://api.mistral.ai/v1/ocr";
 
     let request = ParsingRequest {
-        model: "models/gemini-embedding-exp-03-07".to_string(),
+        model: "mistral-ocr-latest".to_string(),
         document: Document {
             r#type: "document_url".to_string(),
             document_url: document_url.to_string(),
@@ -52,11 +52,8 @@ pub async fn parse_pdf(document_url: &str, api_key: &str) -> Result<HashMap<i32,
     // Return a hashmap of page index to markdown content
     Ok(response
         .pages
-        .iter()
-        .map(|page| {
-            let index = page.index.parse::<i32>().unwrap();
-            (index, page.markdown.clone())
-        })
+        .into_par_iter()
+        .map(|page| (page.index, page.markdown))
         .collect())
 }
 
@@ -71,7 +68,7 @@ mod tests {
         let api_key = std::env::var("MISTRAL_API_KEY").expect("Missing MISTRAL_API_KEY");
         let document_url = "https://arxiv.org/pdf/2201.04234";
 
-        let result = parse_pdf(document_url, &api_key).await.unwrap();
-        println!("{}", result.len());
+        let chunks = parse_pdf(document_url, &api_key).await.unwrap();
+        println!("{}", chunks.len());
     }
 }
