@@ -1,5 +1,5 @@
 [workspace]
-members = ["crates/embedding"]
+members = ["crates/embedding", "crates/parsing"]
 resolver = "3"
 
 [workspace.dependencies]
