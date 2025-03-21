@@ -2,6 +2,13 @@
 name = "ragzilla-parsing"
 version = "0.1.0"
 edition = { workspace = true }
+authors = { workspace = true }
+license = { workspace = true }
+repository = { workspace = true }
+description = "A Rust library for parsing PDFs using the Mistral AI OCR API"
+documentation = "https://github.com/excoffierleonard/ragzilla"
+keywords = ["pdf", "parsing", "ocr", "mistral", "rag"]
+categories = ["api-bindings", "text-processing"]
 
 [dependencies]
 reqwest = { workspace = true }

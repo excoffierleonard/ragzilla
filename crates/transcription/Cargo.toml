@@ -2,6 +2,13 @@
 name = "ragzilla-transcription"
 version = "0.1.0"
 edition = { workspace = true }
+authors = { workspace = true }
+license = { workspace = true }
+repository = { workspace = true }
+description = "A Rust library for transcribing audio to text using OpenAI's GPT-4o transcription API"
+documentation = "https://github.com/excoffierleonard/ragzilla"
+keywords = ["audio", "transcription", "openai", "speech-to-text", "rag"]
+categories = ["api-bindings", "multimedia"]
 
 [dependencies]
 reqwest = { workspace = true }
