@@ -1,32 +1,30 @@
-use reqwest::{Client, Error};
+use reqwest::{
+    Client, Error,
+    multipart::{Form, Part},
+};
 use serde::Deserialize;
 
 #[derive(Deserialize)]
-struct WhisperResponse {
+struct TranscriptionResponse {
     text: String,
 }
 
 pub async fn transcribe(audio_data: &[u8], api_key: &str) -> Result<String, Error> {
     let url = "https://api.openai.com/v1/audio/transcriptions";
+
+    let form = Form::new().text("model", "gpt-4o-transcribe").part(
+        "file",
+        Part::bytes(audio_data.to_vec()).file_name("audio.mp3"),
+    );
+
     let client = Client::new();
-
-    let form = reqwest::multipart::Form::new()
-        .text("model", "whisper-1")
-        .part(
-            "file",
-            reqwest::multipart::Part::bytes(audio_data.to_vec())
-                .file_name("audio.mp3")
-                .mime_str("audio/mpeg")
-                .unwrap(),
-        );
-
     let response = client
         .post(url)
         .bearer_auth(api_key)
         .multipart(form)
         .send()
         .await?
-        .json::<WhisperResponse>()
+        .json::<TranscriptionResponse>()
         .await?;
 
     Ok(response.text)
