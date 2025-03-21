@@ -1,5 +1,5 @@
 [package]
-name = "transcription"
+name = "ragzilla-transcription"
 version = "0.1.0"
 edition = { workspace = true }
 
@@ -8,5 +8,5 @@ reqwest = { workspace = true }
 serde = { workspace = true }
 
 [dev-dependencies]
-tokio = { version = "1.44.1", features = ["full"] }
-dotenvy = "0.15.7"
+tokio = { workspace = true }
+dotenvy = { workspace = true }
