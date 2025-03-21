@@ -6,7 +6,7 @@ authors = { workspace = true }
 license = { workspace = true }
 repository = { workspace = true }
 description = "A Rust library for parsing PDFs using the Mistral AI OCR API"
-documentation = "https://github.com/excoffierleonard/ragzilla"
+documentation = "https://docs.rs/ragzilla-parsing"
 keywords = ["pdf", "parsing", "ocr", "mistral", "rag"]
 categories = ["api-bindings", "text-processing"]
 
