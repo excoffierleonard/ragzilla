@@ -1,5 +1,5 @@
 use reqwest::{Client, Error};
-use serde::{Deserialize, Serialize};
+use serde::Deserialize;
 
 #[derive(Deserialize)]
 struct WhisperResponse {
