@@ -17,7 +17,7 @@ Add ragzilla to your dependencies with the features you need:
 
 ```toml
 [dependencies]
-ragzilla = { version = "0.3.0", features = ["embedding", "parsing"] }
+ragzilla = { version = "0.3.1", features = ["embedding", "parsing"] }
 ```
 
 ### Embedding Example
