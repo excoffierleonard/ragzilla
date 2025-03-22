@@ -36,7 +36,7 @@ mod tests {
     use std::{fs, path::PathBuf};
 
     #[tokio::test]
-    async fn test_whisper_transcription() {
+    async fn test_audio_transcription() {
         dotenvy::dotenv().ok();
         let api_key = std::env::var("OPENAI_API_KEY").expect("Missing OPENAI_API_KEY");
         let audio_data = fs::read(

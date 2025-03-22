@@ -27,7 +27,7 @@ struct Embedding {
     values: Vec<f32>,
 }
 
-pub async fn create_embedding(text: &str, api_key: &str) -> Result<Vec<f32>, Error> {
+pub async fn embed(text: &str, api_key: &str) -> Result<Vec<f32>, Error> {
     let url = format!(
         "https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-exp-03-07:embedContent?key={}",
         api_key
@@ -60,12 +60,12 @@ mod tests {
     use dotenvy::dotenv;
 
     #[tokio::test]
-    async fn test_embedding_creation() {
+    async fn test_text_embedding() {
         dotenv().ok();
         let api_key = std::env::var("GEMINI_API_KEY").expect("GEMINI_API_KEY must be set");
         let text = "What is the meaning of life?";
 
-        let embedding = create_embedding(&text, &api_key).await.unwrap();
+        let embedding = embed(&text, &api_key).await.unwrap();
         assert_eq!(embedding.len(), 3072);
     }
 }
