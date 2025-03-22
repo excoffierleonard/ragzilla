@@ -719,28 +719,8 @@ dependencies = [
 ]
 
 [[package]]
-name = "ragzilla-embedding"
+name = "ragzilla"
 version = "0.2.0"
-dependencies = [
- "dotenvy",
- "reqwest",
- "serde",
- "tokio",
-]
-
-[[package]]
-name = "ragzilla-parsing"
-version = "0.1.0"
-dependencies = [
- "dotenvy",
- "reqwest",
- "serde",
- "tokio",
-]
-
-[[package]]
-name = "ragzilla-transcription"
-version = "0.1.0"
 dependencies = [
  "dotenvy",
  "reqwest",
