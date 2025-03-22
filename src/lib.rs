@@ -4,5 +4,5 @@ pub mod embedding;
 #[cfg(feature = "parsing")]
 pub mod parsing;
 
-#[cfg(feature = "transcription")]
-pub mod transcription;
+#[cfg(feature = "transcribing")]
+pub mod transcribing;
