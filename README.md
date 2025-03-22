@@ -8,7 +8,7 @@ Ragzilla provides several features that can be selectively enabled:
 
 - `embedding`: Generate embeddings using Gemini API
 - `parsing`: Parse PDFs using Mistral AI OCR API
-- `transcription`: Transcribe audio to text using OpenAI's GPT-4o API
+- `transcribing`: Transcribe audio to text using OpenAI's GPT-4o API
 - `all`: Enable all features
 
 ## Usage
@@ -17,7 +17,7 @@ Add ragzilla to your dependencies with the features you need:
 
 ```toml
 [dependencies]
-ragzilla = { version = "0.2.0", features = ["embedding", "parsing"] }
+ragzilla = { version = "0.3.0", features = ["embedding", "parsing"] }
 ```
 
 ### Embedding Example
@@ -51,14 +51,14 @@ async fn parse_document() {
 ### Audio Transcription Example
 
 ```rust
-use ragzilla::transcription;
+use ragzilla::transcribing;
 use std::fs;
 
 async fn transcribe_audio() {
     let api_key = std::env::var("OPENAI_API_KEY").expect("OPENAI_API_KEY must be set");
     let audio_data = fs::read("path/to/audio.mp3").expect("Could not read audio file");
     
-    let text = transcription::transcribe(&audio_data, &api_key).await.unwrap();
+    let text = transcribing::transcribe(&audio_data, &api_key).await.unwrap();
     println!("Transcription: {}", text);
 }
 ```
